@@ -16,3 +16,5 @@ input/*
 downloads/*
 
 outputs/*
+*.pyc
+client/package-lock.json
