@@ -18,3 +18,4 @@ downloads/*
 outputs/*
 *.pyc
 client/package-lock.json
+*/__pycache__/*
