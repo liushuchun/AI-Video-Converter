@@ -8,7 +8,7 @@
     import DownloadButton from "./DownloadButton.svelte";
     import VideoPlayer from "./VideoPlayer.svelte";
     
-	const uploadURL = "/upv";
+	const uploadURL = "http://127.0.0.1:5000/upv";
 	const samplingMethods = ["Euler a"]; // todo add
 	const styles = ["anime", "realistic", "3D-anime", "art"];
 	const types = ["general", "character", "building", "dance"];

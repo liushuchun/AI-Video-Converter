@@ -281,6 +281,7 @@ def webui():
 
 if __name__ == "__main__":
     if cmd_opts.nowebui:
+        modules.script_callbacks.before_ui_callback()
         api_only()
     else:
         webui()

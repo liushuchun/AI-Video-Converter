@@ -14,7 +14,7 @@ class Video(object):
         "filename": "file",
         "validation": {
             "allowedExtensions": ["mp4", "webm", "ogg"],
-            "sizeLimit": 10485760
+            "sizeLimit": 1048576000
         },
     }
     @staticmethod
@@ -46,12 +46,17 @@ def upload_video():
     app.logger.info(f"type: {setting.setup['controlnet_module']}")
     samplingMethod = request.form['samplingMethod']
     file = request.files['video']
+    print("file:",file)
     logging.info(f"file: {file}")
+    print("fps:",fps)
     filename = request.form["fname"]
+    print("file_name:",filename)
+    fname = filename+".mp4"
     if not os.path.isdir(app.config['UPLOAD_FOLDER']):
         os.mkdir(app.config['UPLOAD_FOLDER'])
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    fname = filename+".mp4"
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], fname))
+    
+    
     frameconverter.video2frame(os.path.join(app.config['UPLOAD_FOLDER'], fname), fps)
     dirin = os.path.join(app.config['UPLOAD_FOLDER'], fname[:-4] + "-opencv\\")
     if not os.path.isdir("outputs"):

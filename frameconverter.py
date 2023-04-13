@@ -25,7 +25,8 @@ def get_saving_frames_durations(cap, saving_fps):
     """A function that returns the list of durations where to save the frames"""
     s = []
     # get the clip duration by dividing number of frames by the number of frames per second
-    clip_duration = cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(cv2.CAP_PROP_FPS)
+    fps= cv2.CAP_PROP_FPS
+    clip_duration = cap.get(cv2.CAP_PROP_FRAME_COUNT) / cap.get(fps)
     # use np.arange() to make floating-point steps
     for i in np.arange(0, clip_duration, 1 / saving_fps):
         s.append(i)
@@ -39,12 +40,15 @@ def video2frame(video_file,framepersec=60):
     if not os.path.isdir(filename):
         os.mkdir(filename)
     # read the video file
+    print("video_file",video_file)
     cap = cv2.VideoCapture(video_file)
     if cap.isOpened() == False:
         cap.open(video_file)
         logging.info(f"open{cap.isOpened()}")
     # get the FPS of the video
     fps = cap.get(cv2.CAP_PROP_FPS)
+    if fps==0:
+        fps=30
     # if the SAVING_FRAMES_PER_SECOND is above video FPS, then set it to FPS (as maximum)
     saving_frames_per_second = min(fps, SAVING_FRAMES_PER_SECOND)
     # get the list of duration spots to save
@@ -84,7 +88,7 @@ def interpolation(fps):
     pass
 
 
-'''def frame2video(pathIn,pathOut,fps):
+def frame2video(pathIn,pathOut,fps):
     logging.info(f"pathIn: {pathIn}")
     logging.info(f"pathOut: {pathOut}")
     frame_array = []
@@ -103,7 +107,7 @@ def interpolation(fps):
     for i in range(len(frame_array)):
         # writing to a image array
         out.write(frame_array[i])
-    out.release()'''
+    out.release()
 
 def convert_frames_to_video(pathIn,pathOut,fps):
     frame_array = []
